@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rock, Paper, Scissors</title>
+        <!-- need to add reset file -->
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Rock, Paper, Scissors</h1>
+        </header>
+        <main>
+            <!-- form that is initially shown 
+                takes user's name and then hidden -->
+            <div id="playerChooseName">
+                <form id="nameInput">
+                    <div id="playerName"></div>
+                    <button type="submit" id="submitNameButton">Submit</button>
+                </form>
+            </div>
+            <!-- main game screen -->
+            <div id="gameContainer">
+                <!-- win counter and lose counter -->
+                <div id="winContainer">
+                    <div id="playerWins"></div>
+                    <div id="opponentWins"></div>
+                </div>
+                <!-- player information -->
+                <div id="player">
+                    <div id="playerName"></div>
+                    <div id="pRPSContainer"></div>
+                </div>
+                <!-- versus area -->
+                <div id="versus">
+                    <div id="status"></div>
+                    <div id="playerChoice"></div>
+                    <div id="opponentChoice"></div>
+                </div>
+                <!-- opponent information -->
+                <div id="opponent">
+                    <div id="opponentName"></div>
+                    <div id="oRPSContainer"></div>
+                </div>
+                <!-- messages-->
+                <div id="messageBox">
+                    <div id="messageSent"></div>
+                    <form id="messageInput">
+                        <div id="message"></div>
+                        <button type="submit" id="submitMessageButton">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <!-- copyright and links -->
+        </footer>
+        <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-analytics.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="assets/javascript/app.js"></script>
+    </body>
+</html>
