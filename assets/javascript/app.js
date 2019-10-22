@@ -48,17 +48,27 @@ let gameObject = {
 
     // initial load screen
     intialize : function() {
-
+        // hide main screen
+        // show namechoice screen
+        // select online or single player
     },
 
     createPlayer : function() {
         $("#submitNameButton").on("click", function(event) {
             event.preventDefault();
+            // if no name has been enterred then bail out
             if(!($("#playerName").val())) {
                 return
             }
             else {
                 gameObject.player.name = $("#playerName").val().trim();
+                // displaying player's name
+                $("#playerNameDisplay").text(gameObject.player.name);
+                // add to pRPSContainer
+                gameObject.RPS.forEach(function(item) {
+                    console.log(item);
+                    $("#pRPSContainer").append(item.image);
+                });
             }
         });
     },
@@ -82,20 +92,23 @@ let gameObject = {
 
     // selection timer
     timer : function() {
+        // 15 seconds to choose a move then skips turn - whoever chooses wins or tie
+        setInterval(function() {
 
+        }, 15000);
     },
 
     // player wins
     pWin : function() {
         this.player.wins += 1; 
-        // update win display
+        $("#playerWins").text(this.player.name + " wins: " + this.player.wins);
         $("#status").text(this.player.choice + " beats " this.opponent.choice + ". " + this.player.name + " wins!");
     },
 
     // opponent wins
     oWin : function() {
         this.opponent.wins += 1; 
-        // update win display
+        $("#opponentWins").text(this.opponent.name + " wins: " + this.opponent.wins);
         $("#status").text(this.opponent.choice + " beats " this.player.choice + ". " + this.opponent.name + " wins!");
     },
 
