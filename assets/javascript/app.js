@@ -1,5 +1,5 @@
-  //   Firebase configuration
-  var firebaseConfig = {
+//   Firebase configuration
+var firebaseConfig = {
     apiKey: "AIzaSyBUAGbn0ii9D2AyAd5J3dX2-4riUGnaj44",
     authDomain: "rps-multiplayer-73608.firebaseapp.com",
     databaseURL: "https://rps-multiplayer-73608.firebaseio.com",
@@ -8,11 +8,17 @@
     messagingSenderId: "217985449291",
     appId: "1:217985449291:web:2b738773c45b17b6d8fcce",
     measurementId: "G-94GD03DPFV"
-  };
+};
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+// let database = firebase.database();
+// let connectionsRef = database.ref("/connections")
+// let connectedRef = database.ref(".info/connected")
+// let waitRef = database.ref("/wait")
+// let gameRef = database.ref("/game")
 
 let gameObject = {
 
@@ -48,41 +54,60 @@ let gameObject = {
 
     // initial load screen
     intialize : function() {
-        // hide main screen
-        // show namechoice screen
-        // select online or single player
-    },
-
-    createPlayer : function() {
-        $("#submitNameButton").on("click", function(event) {
+        $("#gameContainer").hide();
+        $("#initialSubmitButton").on("click", function(event) {
             event.preventDefault();
-            // if no name has been enterred then bail out
+            // if no name has been entered then bail out
             if(!($("#playerName").val())) {
                 return
+                // update #gameType saying to choose in red
+            }
+            else if ($("#radioOnline").prop("checked", false) && $("#radioSingle").prop("checked", false)) {
+                return
+                // update #playerNameP to Enter your name in red
             }
             else {
-                gameObject.player.name = $("#playerName").val().trim();
-                // displaying player's name
-                $("#playerNameDisplay").text(gameObject.player.name);
-                // add to pRPSContainer
-                gameObject.RPS.forEach(function(item) {
-                    console.log(item);
-                    $("#pRPSContainer").append(item.image);
-                });
+                if ($("#radioSingle").prop("checked", true)) {
+                    gameObject.computerOpponent();
+                }
+                else if ($("#radioOnline").prop("checked", true)) {
+                    gameObject.createOpponent();
+                }
+                gameObject.createPlayer();
             }
         });
     },
 
-    createOpponent : function() {
+    createPlayer : function() {
+        gameObject.player.name = $("#playerName").val().trim();
+        // displaying player's name
+        $("#playerNameDisplay").text(gameObject.player.name);
+        // add to pRPSContainer
+        gameObject.RPS.forEach(function(item) {
+            console.log(item);
+            $("#pRPSContainer").append(item.image);
+        });
+    },
 
+    createOpponent : function() {
+        gameObject.opponent.name = $("#playerName").val().trim(); //#opponent name?
+        gameObject.RPS.forEach(function(item) {
+            console.log(item);
+            $("#oRPSContainer").append(item.image);
+        });
     },
 
     computerOpponent : function() {
-
+        let nameArray = ["Frank", "Sally", "Henry", "Tyler", "Monica", "Bruce", "Nancy", "Janice"];
+        this.opponent.name = nameArray[Math.floor(Math.random()*nameArray.length)]
+        gameObject.RPS.forEach(function(item) {
+            console.log(item);
+            $("#oRPSContainer").append(item.image);
+        });
     },
 
     tie : function() {
-        $("#status").text(this.player.choice + " ties " this.opponent.choice);
+        $("#status").text(this.player.choice + " ties " + this.opponent.choice);
     },
 
     // creates new round instance - after players determined
@@ -102,14 +127,14 @@ let gameObject = {
     pWin : function() {
         this.player.wins += 1; 
         $("#playerWins").text(this.player.name + " wins: " + this.player.wins);
-        $("#status").text(this.player.choice + " beats " this.opponent.choice + ". " + this.player.name + " wins!");
+        $("#status").text(this.player.choice + " beats " + this.opponent.choice + ". " + this.player.name + " wins!");
     },
 
     // opponent wins
     oWin : function() {
         this.opponent.wins += 1; 
         $("#opponentWins").text(this.opponent.name + " wins: " + this.opponent.wins);
-        $("#status").text(this.opponent.choice + " beats " this.player.choice + ". " + this.opponent.name + " wins!");
+        $("#status").text(this.opponent.choice + " beats " + this.player.choice + ". " + this.opponent.name + " wins!");
     },
 
     checkWin : function(pChoice, oChoice) {
@@ -126,7 +151,7 @@ let gameObject = {
     }
 }
 
-
+gameObject.createPlayer();
 //checkWin(this.player.choice, this.opponent.choice);
 
 

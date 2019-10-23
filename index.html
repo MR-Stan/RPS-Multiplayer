@@ -15,10 +15,14 @@
         <main>
             <!-- form that is initially shown 
                 takes user's name and then hidden -->
-            <div id="playerChooseName">
-                <form id="nameInput">
-                    <div id="playerName"></div>
-                    <button type="submit" id="submitNameButton">Submit</button>
+            <div id="initialContainer">
+                <form id="initialInput">
+                    <p id="gameType">Play online or single player?</p>
+                    <input type="radio" name="gameType" value="Online" id="radioOnline"> Online
+                    <input type="radio" name="gameType" value="Single Player" id="radioSingle"> Single Player
+                    <p id="playerNameP">Enter your name:</p>
+                    <input type="text" id="playerName"/>
+                    <button type="submit" id="initialSubmitButton">Submit</button>
                 </form>
             </div>
             <!-- intermediate screen after player chooses
@@ -51,7 +55,7 @@
                 <div id="messageBox">
                     <div id="messageSent"></div>
                     <form id="messageInput">
-                        <div id="message"></div>
+                        <input type="text" id="message"/>
                         <button type="submit" id="submitMessageButton">Submit</button>
                     </form>
                 </div>
