@@ -15,10 +15,10 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 // let database = firebase.database();
-// let connectionsRef = database.ref("/connections")
-// let connectedRef = database.ref(".info/connected")
-// let waitRef = database.ref("/wait")
-// let gameRef = database.ref("/game")
+// let connectionsRef = database.ref("/connections");
+// let connectedRef = database.ref(".info/connected");
+// let waitRef = database.ref("/wait");
+// let gameRef = database.ref("/game");
 
 let gameObject = {
 
@@ -53,7 +53,7 @@ let gameObject = {
     },
 
     // initial load screen
-    intialize : function() {
+    initialize : function() {
         $("#gameContainer").hide();
         $("#initialSubmitButton").on("click", function(event) {
             event.preventDefault();
@@ -62,18 +62,23 @@ let gameObject = {
                 return
                 // update #gameType saying to choose in red
             }
-            else if ($("#radioOnline").prop("checked", false) && $("#radioSingle").prop("checked", false)) {
+            else if (!($("#radioOnline").is(":checked")) && !($("#radioSingle").is(":checked"))) {
                 return
                 // update #playerNameP to Enter your name in red
             }
             else {
-                if ($("#radioSingle").prop("checked", true)) {
-                    gameObject.computerOpponent();
-                }
-                else if ($("#radioOnline").prop("checked", true)) {
+                if ($("#radioOnline").is(":checked")) {
                     gameObject.createOpponent();
                 }
+                else if ($("#radioSingle").is(":checked")) {
+                    gameObject.computerOpponent();
+                }
+                $("#radioOnline").prop("checked", false)
+                $("#radioSingle").prop("checked", false)
+                $("#playerName").val("");
+                $("#initialContainer").hide();
                 gameObject.createPlayer();
+                $("#gameContainer").show();
             }
         });
     },
@@ -84,7 +89,7 @@ let gameObject = {
         $("#playerNameDisplay").text(gameObject.player.name);
         // add to pRPSContainer
         gameObject.RPS.forEach(function(item) {
-            console.log(item);
+            // add data-name
             $("#pRPSContainer").append(item.image);
         });
     },
@@ -92,7 +97,7 @@ let gameObject = {
     createOpponent : function() {
         gameObject.opponent.name = $("#playerName").val().trim(); //#opponent name?
         gameObject.RPS.forEach(function(item) {
-            console.log(item);
+            // add data-name
             $("#oRPSContainer").append(item.image);
         });
     },
@@ -112,7 +117,23 @@ let gameObject = {
 
     // creates new round instance - after players determined
     newRound : function() {
+        // clear stuff, hide things, show other things, call playerChoice
+    },
 
+    playerChoice : function() {
+        $("#pRPSContainer").on("click", ".image", function(e) {
+            e.stopImmediatePropagation()
+            console.log(this);
+            // move to opponentChoice
+        });
+    },
+
+    opponentChoice : function() {
+        $("#oRPSContainer").on("click", ".image", function(e) {
+            e.stopImmediatePropagation();
+            console.log(this);
+        // move to checkWin(this.player.choice, this.opponent.choice);
+        });
     },
 
     // selection timer
@@ -148,10 +169,26 @@ let gameObject = {
             this.oWin();
         }
     this.newRound();
-    }
+    },
+
+    // keeping track of number of connections and assigning player id
+    connectionID : function() {
+        connectedRef.on("value", function(snap) {
+            if (snap.val()) {
+                let connect = connectionsRef.push(true);
+                gameObject.player.id = connect.key;
+                connect.onDisconnect().remove();
+            }
+        });
+    },
+
+    displayConnections : function() {
+
+    },
+
 }
 
-gameObject.createPlayer();
-//checkWin(this.player.choice, this.opponent.choice);
+gameObject.initialize();
+
 
 
