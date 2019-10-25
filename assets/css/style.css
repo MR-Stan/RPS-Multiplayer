@@ -1,4 +1,51 @@
+html {
+    
+}
+
+header {
+    background-color: grey;
+    color: whitesmoke;
+    text-align: center;
+    font-size: 2.5em;
+}
+
+body {
+    text-align: center;
+}
+
 .image {
-    height: 150px;
-    width: 250px;
+    height: 100px;
+    width: 175px;
+}
+
+#gameContainer {
+    margin: 2% auto;
+    width: 80%;
+    display: grid;
+    grid-template-columns: auto 20% 20% 20% auto;
+    grid-template-rows: auto auto auto;
+}
+
+#winContainer {
+    grid-area: 1 / 2 / 2 / 5;
+}
+
+#player {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+#versus {
+    grid-area: 2 / 3 / 3 / 4;
+}
+
+#opponent {
+    grid-area: 2 / 4 / 3 / 5;
+}
+
+#messageBox {
+    grid-area: 3 / 2 / 4 / 5;
+}
+
+.image {
+    display: block;
 }

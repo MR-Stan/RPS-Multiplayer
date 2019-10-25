@@ -68,13 +68,14 @@ let gameObject = {
             }
             else {
                 if ($("#radioOnline").is(":checked")) {
-                    gameObject.createOpponent();
+                    //gameObject.createOpponent();
                 }
                 else if ($("#radioSingle").is(":checked")) {
                     gameObject.computerOpponent();
                 }
-                $("#radioOnline").prop("checked", false)
-                $("#radioSingle").prop("checked", false)
+                $("#radioOnline").prop("checked", false);
+                $("#radioSingle").prop("checked", false);
+                gameObject.player.name = $("#playerName").val().trim();
                 $("#playerName").val("");
                 $("#initialContainer").hide();
                 gameObject.createPlayer();
@@ -84,9 +85,8 @@ let gameObject = {
     },
 
     createPlayer : function() {
-        gameObject.player.name = $("#playerName").val().trim();
         // displaying player's name
-        $("#playerNameDisplay").text(gameObject.player.name);
+        $("#playerNameDisplay").text("Player: " + gameObject.player.name);
         // add to pRPSContainer
         gameObject.RPS.forEach(function(item) {
             // add data-name
@@ -104,11 +104,13 @@ let gameObject = {
 
     computerOpponent : function() {
         let nameArray = ["Frank", "Sally", "Henry", "Tyler", "Monica", "Bruce", "Nancy", "Janice"];
-        this.opponent.name = nameArray[Math.floor(Math.random()*nameArray.length)]
+        gameObject.opponent.name = nameArray[Math.floor(Math.random()*nameArray.length)];
+        $("#opponentName").text("Player: " + gameObject.opponent.name);
         gameObject.RPS.forEach(function(item) {
             console.log(item);
             $("#oRPSContainer").append(item.image);
         });
+        gameObject.newRound();
     },
 
     tie : function() {
@@ -118,13 +120,13 @@ let gameObject = {
     // creates new round instance - after players determined
     newRound : function() {
         // clear stuff, hide things, show other things, call playerChoice
+        gameObject.playerChoice();
     },
 
     playerChoice : function() {
         $("#pRPSContainer").on("click", ".image", function(e) {
             e.stopImmediatePropagation()
             console.log(this);
-            // move to opponentChoice
         });
     },
 
